@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BlogAPP</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/news.png' %}">
+    <script src="{% static 'tinyInject.js' %}"></script>
+</head>
+
+<body>
+    <nav id="navbar">
+
+        <div class="container">
+            <div class="nav-bar">
+                <ul class="nav-order">
+                    <li class="item"><a class="nav-link" href="{% url 'store:index' %}">HOME</a></li>
+                    <li class="item"><a class="nav-link" href="{% url 'store:news' %}">LIVE</a></li>
+                    <li class="item"><a class="nav-link" href="{% url 'store:contact' %}">CONTACT</a></li>
+                    <li class="item"><a class="nav-link" href="/admin" target="_blank">ADMIN</a></li>
+                    {% for category in category_list %}
+                    <li class="item" style="text-transform: uppercase;;">
+                    <a href="/category/{{ category.name }}" class="nav-link">{{ category.name|title }}</a></li>
+                    {% endfor %}
+                </ul>
+                <ul class="nav-order-two">
+                    <li class="item"><a class="nav-link" href="#"><img src="{% static 'images/news.png' %}"></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+
+
+    <main>
+        <section class="post-list-nwes">
+
+            {% for post in posts %}
+            <article class="card">
+                <a href="{% url 'store:single_post' post.slug %}"><img src="{{ post.imageURL }}" class="pic" alt="{{post.name}}"></a>
+                <div class="card-info">
+                    <header class="card-header">
+                        <div class="card-name">
+                            <ul class="card-name-list">
+                                <li class="card-name-title">
+                                    <a href="{% url 'store:single_post' post.slug %}"
+                                        class="card-name-link">Comments</a>
+                                </li>
+                                <li class="card-name-title">
+                             {% with post.comments.count as total_comments %}
+                                    <a href="{% url 'store:single_post' post.slug %}" class="card-name-link">
+                                    Comment{{ total_comments|pluralize }} {{ total_comments }} </a>
+                                    {% endwith %}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-title">
+                            <h2 class="card-title-text"><a
+                                    href="{% url 'store:single_post' post.slug %}">{{post.title}}</a></h2>
+                        </div>
+                        <div class="card-date-author">
+                            <time class="card-date" datetime="">{{ post.created_on|date:'M d, Y H:i'}}</time>
+                            <span class="card-author">{{post.author}}</span>
+                        </div>
+                    </header>
+                    <div class="card-content">
+                        <p><a href="{% url 'store:single_post' post.slug %}" class="more">{{ post.snippet |safe}} more
+                                info..</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+
+        </section>
+
+        <!--Side Bar. Выделил как отдельную секцию в aside-->
+        <aside class="post-news-sidebar">
+
+           
+
+            <section class="post">
+                <div class="post-title">
+                    <h3 class="title-name">Recent Posts</a></h3>
+                </div>
+                <!--Сами карточки в боковой панели-->
+                {% for post in posts %}
+                <article class="post-list-sidebar">
+                    <a href="{% url 'store:single_post' post.slug %}"><img src="{{post.imageURL}}" class="pic-post" style="width: 70px;height: 70px;" alt=""></a>
+                    <div class="post-header">
+                        <time class="post-date" datetime="">{{ post.created_on|date:'M d, Y H:i'}}</time>
+                        <div class="header-name">
+                            <h4 class="header-name-text"><a href="{% url 'store:single_post' post.slug %}">{{ post.title}}</a></h4>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+
+            <section class="tags">
+                <div class="post-tags">
+                    <h3 class="tags-name">Categories</h3>
+                </div>
+                <!--Для описания блока тегов нашёл такую реализацию-->
+                <div class="tag">
+                    <ul class="tag-list">
+                    {% for category in category_list %}
+                    <li class="tag-name">
+                    <a href="/category/{{ category.name }}" class="tag-name-link">{{ category.name|title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+
+    {% endblock content %}
+    <!---------Footer------->
+    <footer id="footer">
+        <div class="container-footer">
+            <div class="box">
+                <h3 class="footer-heading">Our Clients</h3>
+                <h6 class="footer-para"><a href="#" class="footer-lin">ADIDAS</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">NewBalance</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Garlsberg</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Nike</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Standart Chartered</a></h6>
+            </div>
+            <div class="box">
+                <h3 class="footer-heading">Our Team</h3>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Goalkeeper</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Defender</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Mid-Fielder</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Forward</a></h6>
+                <h6 class="footer-para"><a href="#" class="footer-lin">Coach</a></h6>
+            </div>
+            <div class="box">
+                <h3 class="footer-heading">Get Social</h3>
+                <h6 class="footer-para"><a href="https://www.facebook.com/liverpoolunoffical/"
+                        class="footer-lin">Facebook</a></h6>
+                <h6 class="footer-para"><a href="https://www.instagram.com/Liverpool_unoffical/"
+                        class="footer-lin">Instagram</a></h6>
+                <h6 class="footer-para"><a href="https://twitter.com/Asadbek03345075" class="footer-lin">Twitter</a>
+                </h6>
+                <h6 class="footer-para"><a href="https://www.linkedin.com/in/asatbekxalimjonov"
+                        class="footer-lin">LinkedIn</a></h6>
+                <h6 class="footer-para"><a href="https://t.me/liverpoolunoffical" class="footer-lin">Telegram</a></h6>
+            </div>
+            <div class="box">
+                <img src="{% static 'images/news.png' %}" class="footer-logo">
+            </div>
+        </div>
+    </footer>
+    <footer class="powered">
+        <div class="container">
+            <div class="heading-pow">
+                <h3>Powered by Asadbek Halimjonov</h3>
+            </div>
+        </div>
+    </footer>
+    <!---------End Footer---->
+</body>
+
+</html>

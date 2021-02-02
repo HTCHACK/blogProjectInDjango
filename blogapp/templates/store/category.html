@@ -1,0 +1,80 @@
+{% extends 'store/index.html' %}
+
+{% block content %}
+    <main>
+      <section class="post-list-nwes">
+        <h1> List of {{catlist.cat}} posts</h1>
+        {% for post in catlist.posts %}
+          <article class="card">
+            <a href="{% url 'store:single_post' post.slug %}"><img src="{{post.imageURL}}" class="pic" alt="{{ post.title }}"></a>
+              <div class="card-info">
+                  <header class="card-header">
+                      <div class="card-name">
+                          <ul class="card-name-list">
+                              <li class="card-name-title">
+                                <a href="{% url 'store:single_post' post.slug %}"
+                                class="card-name-link">Comments</a>
+                              </li>
+                              <li class="card-name-title">
+                                {% with post.comments.count as total_comments %}
+                                <a href="{% url 'store:single_post' post.slug %}" class="card-name-link">
+                                Comment{{ total_comments|pluralize }} {{ total_comments }} </a>
+                                {% endwith %}
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="card-title">
+                          <h2 class="card-title-text"><a href="{% url 'store:single_post' post.slug %}">{{post.title|truncatechars:50}}</a></h2>
+                      </div>
+                      <div class="card-date-author">
+                          <time class="card-date" datetime="">{{ post.created_on|date:'M d, Y H:i'}}</time>
+                          <span class="card-author">Author : {{post.author}}</span>
+                      </div>
+                  </header>
+                  <div class="card-content">
+                      <a href="{% url 'store:single_post' post.slug %}" class="more"><p>{{ post.subtitle | slice:"255"|safe}}</p></a>
+                  </div>
+              </div>
+          </article>
+          {% endfor %}
+  
+  
+      </section>
+  
+      <!--Side Bar. Выделил как отдельную секцию в aside-->
+      <aside class="post-news-sidebar">
+  
+        
+
+        
+          
+  
+      </aside>
+  </main>
+  
+  {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

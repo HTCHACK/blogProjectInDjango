@@ -1,0 +1,65 @@
+{% extends 'store/index.html' %}
+
+{% block content %}
+<div class="container">
+    <hr class="line">
+    <div class="card-wrapper-news-topic">
+        <div class="card-news-topic">
+            <div class="content-topic">
+                <img src="{{post.imageURL}}">
+                <h3 class="news-heading-topic">{{post.title}}<br><br>Date : {{post.created_on|date:'M d, Y H:i'}} |
+                    Author : {{post.author}}</h3>
+                <hr class="line">
+                <div class="paragraph">
+                    <p class="news-para-topic">{{post.slug}}<br>
+                        {{post.subtitle | safe}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="comments-section">
+            <div class="number-comments">
+                {% with comments.count as total_comments %}
+                <h2>
+                    {{ total_comments }} comment{{ total_comments|pluralize }}
+                </h2>
+                {% endwith %}
+                <a class="add" href="#contact">ADD COMMENTS</a>
+            </div>
+                <div class="comments">
+                {% for comment in comments %}
+                <p class="comment-heading"></p><br>
+                <div class="comment-box">
+                <p class="comment-name">Name : {{ comment.name }}</p>
+                <p class="date">Date : {{ comment.created_on }}</p>
+                <p class="comment">Comment : {{ comment.content|linebreaks }}</p>
+                </div>
+                {% empty %}
+                <p class="comment">There are no comments for this post.</p>
+                {% endfor %}
+                </div>
+            <div class="container-contact">
+                <form id="contact" method="post">
+                    <h3>Add Comment</h3>
+                    <h4>Contact us today, and get reply with in 24 hours!</h4>
+                
+                    {% csrf_token %}
+                    <fieldset>
+                        <h5 style="padding-bottom: 0.4rem;">Name</h5>
+                        {{comment_form.name}}
+                    </fieldset>
+                    <fieldset>
+                        <h5 style="padding-bottom: 0.4rem;">Comment</h5>
+                        {{comment_form.content}}
+                    </fieldset>
+                    <fieldset>
+                    <fieldset>
+                        <button name="submit" type="submit" id="comment-submit">Add Comment</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

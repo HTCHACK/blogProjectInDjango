@@ -1,0 +1,32 @@
+{% extends 'store/index.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-contact">
+    <form action="" method="POST" id="contact">
+        <h3>Quick Contact</h3>
+        <h4>Contact us today, and get reply with in 24 hours!</h4>
+        {% csrf_token %}
+        <fieldset>
+            <h5 style="padding-bottom: 0.4rem;">First Name</h5>
+            {{form.first_name}}
+        </fieldset>
+        <fieldset>
+            <h5 style="padding-bottom: 0.4rem;">Last Name</h5>
+            {{form.last_name}}
+        </fieldset>
+        <fieldset>
+            <h5 style="padding-bottom: 0.4rem;">Phone Number</h5>
+            {{form.phone}}
+        </fieldset>
+        <fieldset>
+            <h5 style="padding-bottom: 0.4rem;">Message</h5>
+            {{form.text}}
+        </fieldset>
+        <fieldset>
+            <button name="submit" type="submit" id="contact-submit">Submit</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

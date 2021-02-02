@@ -1,0 +1,16 @@
+Task Blog Project
+
+Pages: User Page
+-Index: categories, news, comments, cover image
+-News: left side: categories (techs, sports)
+-Contact: Form: phone, subject, message, send button
+
+Admin: 
+Add new catories: name
+News: title, content, cover image, author, confirm (select) true, false
+Contact: admin should see messages from User Page
+
+Upload the project to github.com
+
+Given date: 26.01.2021
+Deadline: 02.02.2021  + 3

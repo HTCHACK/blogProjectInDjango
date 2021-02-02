@@ -1,0 +1,102 @@
+{% extends 'store/index.html' %}
+
+
+{% block content %}
+
+
+<main>
+    <section class="post-list-nwes">
+
+        {% for new in news %}
+        <article class="card">
+            <img src="{{ new.imageURL }}" class="pic" alt="{{new.name}}">
+            <div class="card-info">
+                <header class="card-header">
+                    <div class="card-name">
+                        <ul class="card-name-list">
+                            <li class="card-name-title">
+                                <a href="#" class="card-name-link">Health</a>
+                            </li>
+                            <li class="card-name-title">
+                                <a href="#" class="card-name-link">Lifestyle</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-title">
+                        <h2 class="card-title-text"><a href="#">{{new.name}}</a></h2>
+                    </div>
+                    <div class="card-date-author">
+                        <time class="card-date" datetime="">{{ new.created_on|date:'M d, Y H:i'}}</time>
+                        <span class="card-author">{{new.author}}</span>
+                    </div>
+                </header>
+                <div class="card-content">
+                    <p>{{ new.topic | slice:"255"|safe}}</p>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+
+
+    </section>
+
+    <!--Side Bar. Выделил как отдельную секцию в aside-->
+    <aside class="post-news-sidebar">
+
+        
+
+        <section class="post">
+            <div class="post-title">
+                <h3 class="title-name">Recent Posts</a></h3>
+            </div>
+            <!--Сами карточки в боковой панели-->
+            {% for post in posts %}
+            <article class="post-list-sidebar">
+                <a href="{% url 'store:single_post' post.slug %}"><img src="{{post.imageURL}}" class="pic-post" style="width: 70px;height: 70px;" alt=""></a>
+                <div class="post-header">
+                    <time class="post-date" datetime="">{{ post.created_on|date:'M d, Y H:i'}}</time>
+                    <div class="header-name">
+                        <h4 class="header-name-text"><a href="{% url 'store:single_post' post.slug %}">{{ post.title}}</a></h4>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+
+        <section class="form-subscribe">
+            <div class="post-mail">
+                <h3 class="mail-name">Follow Us</a></h3>
+            </div>
+
+            <form class="subscribe" action="" method="POST">
+                {% csrf_token %}
+                <label class="subscribe-group">
+                    <span class="subscribe-hint"></span>
+                    <button class="field-subscribe">{{form_subs.email}}</button>
+                </label>
+                <button type="submit" class="button-subscribe">Subscribe</button>
+            </form>
+        </section>
+
+        
+        <section class="tags">
+            <div class="post-tags">
+                <h3 class="tags-name">Categories</h3>
+            </div>
+            <!--Для описания блока тегов нашёл такую реализацию-->
+            <div class="tag">
+                <ul class="tag-list">
+                    {% for category in category_list %}
+                    <li class="tag-name">
+                    <a href="/category/{{ category.name }}" class="tag-name-link">{{ category.name|title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+        </section>
+
+
+    </aside>
+</main>
+
+{% endblock content %}
